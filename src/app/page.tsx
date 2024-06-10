@@ -32,10 +32,10 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className='flex flex-col h-full space-x-1 space-y-1 flex-wrap items-center justify-center'>
+    <div className='h-screen flex flex-col space-x-1 space-y-4 flex-wrap items-center justify-center'>
       <NameForm onSubmit={handleFormSubmit} />
       <div>
-        {details && <div className='flex space-x-3 space-y-3 flex-wrap items-center justify-center'>
+        {details && <div className='flex flex-wrap items-center justify-center'>
           <Card title='Age' value={details.age.toString()}/>
           <Card title='Gender' value={details.gender.value} progress={details.gender.probability}/>
           <Card title='Country' value={details.country.value} progress={details.country.probability}/>
