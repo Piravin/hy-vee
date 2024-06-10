@@ -32,14 +32,14 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className='flex flex-col h-full space-x-1 space-y-1 flex-wrap items-center justify-center'>
       <NameForm onSubmit={handleFormSubmit} />
       <div>
-        {details && <>
+        {details && <div className='flex space-x-3 space-y-3 flex-wrap items-center justify-center'>
           <Card title='Age' value={details.age.toString()}/>
           <Card title='Gender' value={details.gender.value} progress={details.gender.probability}/>
           <Card title='Country' value={details.country.value} progress={details.country.probability}/>
-        </>}
+        </div>}
       </div>
     </div>
   );

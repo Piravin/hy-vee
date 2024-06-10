@@ -7,10 +7,10 @@ export default function Card({
 }){
   return (
     <>
-      <div>
-        <p>{title}</p>
-        <h1>{value}</h1>
-        {progress && <p>{progress.toFixed(2)}</p>}
+      <div className="bg-white shadow-md rounded-lg p-4 w-64">
+        <p className="text-sm text-gray-500">{title}</p>
+        <h1 className="text-2xl font-bold text-gray-800">{value}</h1>
+        {progress && <p className="text-sm text-gray-500">{progress.toFixed(2)}</p>}
       </div>
     </>
   )
