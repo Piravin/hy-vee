@@ -6,13 +6,18 @@ import { RestApi } from '@/utils/rest-api';
 import { useState } from 'react';
 
 const Home: React.FC = () => {
-  const [details, setDetails] = useState<Details>();
+  const [details, setDetails] = useState<Details | null | undefined>(undefined);
+  const [errors, setErrors] = useState<string[] | null>();
 
   const handleFormSubmit = async (data: { name: string }) => {
     try {
+      setDetails(null);
+      setErrors(null);
       const age: AgeApiResult = await RestApi.get(`https://api.agify.io/`, { name: data.name });
       const gender: GenderApiResult = await RestApi.get(`https://api.genderize.io/`, { name: data.name });
       const country: CountryApiResult = await RestApi.get(`https://api.nationalize.io/`, { name: data.name });
+      if (country.country?.length === 0)
+        setErrors(['Unable to make predictions, try using a different name.']);
       setDetails({
         age: age.age,
         gender: {
@@ -32,14 +37,16 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className='h-screen flex flex-col space-x-1 space-y-4 flex-wrap items-center justify-center'>
+    <div className='h-full flex flex-col space-x-1 space-y-4 flex-wrap items-center justify-center'>
+      {details === undefined && <div className='text-5xl lg:max-w-[50vw] p-6 mb-6 text-center text-gray-700 italic'>Enter a name to start prediction...</div>}
       <NameForm onSubmit={handleFormSubmit} />
       <div>
-        {details && <div className='flex flex-wrap items-center justify-center'>
+        {details && <div className='flex flex-wrap items-center justify-center transition-all duration-300'>
           <Card title='Age' value={details.age.toString()}/>
           <Card title='Gender' value={details.gender.value} progress={details.gender.probability}/>
           <Card title='Country' value={details.country.value} progress={details.country.probability}/>
         </div>}
+        {details === null && errors && <div>{errors}</div>}
       </div>
     </div>
   );
