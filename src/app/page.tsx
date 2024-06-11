@@ -13,9 +13,9 @@ const Home: React.FC = () => {
     try {
       setDetails(null);
       setErrors(null);
-      const age: AgeApiResult = await RestApi.get(`https://api.agify.io/`, { name: data.name });
-      const gender: GenderApiResult = await RestApi.get(`https://api.genderize.io/`, { name: data.name });
-      const country: CountryApiResult = await RestApi.get(`https://api.nationalize.io/`, { name: data.name });
+      const age: AgeApiResult = await RestApi.get(process.env.NEXT_PUBLIC_AGE_API || '', { name: data.name });
+      const gender: GenderApiResult = await RestApi.get(process.env.NEXT_PUBLIC_GENDER_API || '', { name: data.name });
+      const country: CountryApiResult = await RestApi.get(process.env.NEXT_PUBLIC_COUNTRY_API || '', { name: data.name });
       if (country.country?.length === 0)
         setErrors(['Unable to make predictions, try using a different name.']);
       setDetails({
